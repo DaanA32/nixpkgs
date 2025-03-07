@@ -250,7 +250,8 @@ let
           inTunOpts =
             [
               (sec tun.name)
-              "type = server"
+              # "type = server"
+              (strOpt "type" tun.type)
               (intOpt "port" tun.port)
               (strOpt "host" tun.address)
             ]
@@ -697,6 +698,11 @@ in
             { name, ... }:
             {
               options = {
+                type = mkOption {
+                  type = with types; str;
+                  default = "server";
+                  description = "Set tunnel type";
+                };
                 inPort = mkOption {
                   type = types.int;
                   default = 0;
